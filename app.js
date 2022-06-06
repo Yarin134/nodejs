@@ -1,5 +1,8 @@
 const express = require('express');
+
 const bodyParser = require('body-parser');
+
+const pageNotFoundController = require('../nodejs/controllers/404-page')
 
 const app = express();
 
@@ -8,11 +11,9 @@ const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/admin', adminRoutes);
+app.use('/admin', adminRoutes.router);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-    res.status(404).send('<h1>Page not found</h1>');
-});
+app.use(pageNotFoundController.pageNotFount);
 
 app.listen(3000);
